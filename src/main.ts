@@ -16,9 +16,11 @@ async function bootstrap() {
   SwaggerModule.setup("api", app, document);
 
   app.enableCors();
-  app.useGlobalPipes(
-    new ValidationPipe({ whitelist: false, forbidNonWhitelisted: true })
-  );
+  app.useGlobalPipes(new ValidationPipe({
+    whitelist: true, // remove propriedades não definidas no DTO
+    forbidNonWhitelisted: true, // proíbe propriedades não definidas no DTO
+    transform: true
+}));
 
   const port = process.env.DB_PORT || 3000;
 

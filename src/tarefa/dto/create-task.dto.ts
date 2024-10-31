@@ -17,7 +17,4 @@ export class CreateTaskDto {
 
   @IsDateString()
   deadline: string;
-
-  @IsInt()
-  displayOrder: number;
 }
