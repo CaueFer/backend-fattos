@@ -22,7 +22,7 @@ async function bootstrap() {
     transform: true
 }));
 
-  const port = process.env.DB_PORT || 3000;
+  const port = process.env.DB_PORT || 5000;
 
   await app.listen(port, () => {
     console.log("Server Nest On: ", port);
