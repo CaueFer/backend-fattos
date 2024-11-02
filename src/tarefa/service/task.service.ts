@@ -38,6 +38,14 @@ export class TaskService {
       .select('MAX(task.displayOrder)', 'max')
       .getRawOne();
 
+    const existingTask = await this._taskRepository.findOne({
+      where: {
+        name: createTaskDto.name,
+      },
+    });
+
+    if (existingTask) throw new ConflictException('Este nome já em uso, use outro!');
+
     const newTask = this._taskRepository.create({
       ...createTaskDto,
       displayOrder: (maxDisplayOrder.max || 0) + 1,
@@ -51,10 +59,6 @@ export class TaskService {
 
     if (!task) {
       throw new NotFoundException('Task não encontrada, verifique o ID');
-    }
-
-    if (!updateTaskDto.name || updateTaskDto.name.trim() === '') {
-      throw new BadRequestException('Novo nome inválido ou vazio!');
     }
 
     const existingTask = await this._taskRepository.findOneBy({
