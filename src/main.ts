@@ -15,11 +15,8 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup("api", app, document);
 
-  app.enableCors({
-    origin: '*', 
-    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-    credentials: true,
-  });
+  app.enableCors();
+  
   app.useGlobalPipes(new ValidationPipe({
     whitelist: true, // remove propriedades não definidas no DTO
     forbidNonWhitelisted: true, // proíbe propriedades não definidas no DTO
